@@ -6,7 +6,15 @@
 </head>
 <body>
 {% for ticket in tickets %}
-{{ ticket.id }}
+<p>{{ ticket.priority }}</p>
 {% endfor %}
+<p>total {{total}}</p>
+<p>closed {{closed}}</p>
+<p>raised {{raised}}</p>
+<p>in_progress {{in_progress}}</p>
+<p>low {{low}}</p>
+<p>medium {{medium}}</p>
+<p>high {{high}}</p>
+
 </body>
 </html>
