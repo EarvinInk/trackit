@@ -1,12 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for ticket in tickets %}
-<p>{{ ticket.priority }}</p>
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+{% endblock %}
+
+{% block title %}
+title
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+     {% for ticket in tickets %}
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ ticket.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ ticket.get_priority_display }} {{ ticket.get_progress_display }}</h6>
+    <p class="card-text">{{ ticket.description }}</p>
+
+    <a href="{% url 'ticket:close' ticket.id %}" class="card-link"><button class="btn btn-primary">close</button></a>
+  </div>
+</div>
+<p></p>
 {% endfor %}
 <p>total {{total}}</p>
 <p>closed {{closed}}</p>
@@ -15,6 +30,12 @@
 <p>low {{low}}</p>
 <p>medium {{medium}}</p>
 <p>high {{high}}</p>
-
-</body>
-</html>
+<form method="get" action="{% url 'search:search' %}">
+    {% csrf_token %}
+    <input type="search" name="qs">
+    <input type="checkbox" name="today">
+    <input type="date" name="date">
+    <input type="submit">
+</form>
+</div>
+{% endblock %}

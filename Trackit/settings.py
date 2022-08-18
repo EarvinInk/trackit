@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Ticketing',
     'commenting',
+    'searching',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

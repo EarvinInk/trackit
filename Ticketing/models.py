@@ -23,7 +23,7 @@ class Ticket(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     closed_on = models.DateTimeField(null=True)
     time_taken = models.DurationField(null=True)
-    comments = models.TextField()
+    title = models.CharField(max_length=100)
 
     class Meta:
         ordering = ('-date_raised',)

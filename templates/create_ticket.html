@@ -1,16 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>create ticket</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    <input type="number" name="priority">
-    <input type="text" name="description">
-    <input type="text" name="comment">
-    <input type="submit">
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+{% endblock %}
+
+{% block title %}
+title
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" id="title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" name="description" id="description">
+        </div>
+        <div class="form-group">
+            <label for="Priority">Priority</label>
+            <select class="form-control" id="Priority" name="priority">
+                <option value="1">Low</option>
+                <option value="2">Medium</option>
+                <option value="3">High</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Raise</button>
+    </form>
+
+</div>
+{% endblock %}

@@ -22,7 +22,8 @@ from Trackit import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Ticketing.urls')),
-    path('commet/',include('commenting.urls'))
+    path('commet/',include('commenting.urls')),
+path('search/',include('searching.urls'))
 
 ]
 

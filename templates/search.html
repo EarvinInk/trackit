@@ -5,10 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post">
-    {% csrf_token %}
-  <input type="submit">
-</form>
 
+{% for ticket in tickets %}
+<p>{{ ticket.id }}</p>
+{% endfor %}
 </body>
 </html>

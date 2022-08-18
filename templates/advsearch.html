@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="get" action="{% url 'search:advsearch' %}">
+        {% csrf_token %}
+    title
+  <input type="search" name="title">
+    <p>desc</p>
+    <input type="search" name="description">
+   <input type="checkbox" name="today">
+    <input type="date" name="date_min">
+    <input type="date" name="date_max">
+  <input type="submit">
+    </form>
+{% for ticket in tickets %}
+<p>{{ ticket.id }}</p>
+{% endfor %}
+<p>{{querry}}</p>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta name="description" content="{% block metadescription %} {% endblock %}">
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap.min.css' %}">
+</head>
+<body>
+
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+{% block content %}
+{% endblock %}
+
+
+{% include 'footer.html' %}
+
+</div>
+</body>
+</html>
