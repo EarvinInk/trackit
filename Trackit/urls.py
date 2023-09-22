@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from django.conf.urls.static import static
 
 from Trackit import settings
@@ -22,8 +22,9 @@ from Trackit import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Ticketing.urls')),
-    path('commet/',include('commenting.urls')),
-path('search/',include('searching.urls'))
+    path('comment/', include('commenting.urls')),
+    path('search/', include('searching.urls')),
+    path('credentials/', include('credentials.urls'))
 
 ]
 

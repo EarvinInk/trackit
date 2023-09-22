@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import UpdateView, ListView, DetailView
@@ -18,7 +19,7 @@ def create_ticket(request):
         ticket = Ticket(priority=priority,
                         progress=0,
                         description=description,
-                        assigned_to=request.user,
+                        raised_by=request.user,
                         title=title
                         )
         ticket.save()
@@ -33,8 +34,27 @@ def close_ticket(request, ticket_id):
     ticket.time_taken = ticket.closed_on - ticket.date_raised.replace(tzinfo=None)
     ticket.closed_by = request.user
     ticket.save()
+    return HttpResponse(ticket.get_progress_display())
 
-    return redirect('ticket:home')
+
+def priority_raise(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+    if ticket.priority < 3:
+        ticket.priority += 1
+    else:
+        ticket.priority = 3
+    ticket.save()
+    return HttpResponse(ticket.get_priority_display())
+
+
+def priority_lower(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+    if ticket.priority > 1:
+        ticket.priority -= 1
+    else:
+        ticket.priority = 1
+    ticket.save()
+    return HttpResponse(ticket.get_priority_display())
 
 
 class EditTicket(UpdateView):
@@ -42,13 +62,14 @@ class EditTicket(UpdateView):
     form_class = TicketForm
     template_name = 'edit_ticket.html'
     context_object_name = 'ticket'
+
     # fields = ['priority', 'progress']
 
     def get_success_url(self):
         return reverse('ticket:home')
 
 
-class Ticketview(ListView):
+class TicketView(ListView):
     model = Ticket
     context_object_name = 'tickets'
     template_name = 'home.html'

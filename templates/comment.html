@@ -1,15 +1,34 @@
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <input type="submit" class="form-control btn btn-primary">
-    </form>
-</body>
-</html>
+<p class="hilo">gfhghg</p>
+<form method="post" id="comment-form" action="/comment/comment/2/">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <input type="submit" class="form-control btn btn-primary">
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+<!--    post commet    -->
+    $('#comment-form').on('submit', function(){
+    var comment = $('#comment').val();
+    var tid = 2;
+$.ajax(
+    {
+     type:"GET",
+        url: "/comment/comment/" +tid,
+        data:{
+
+                 content:comment
+        },
+        success: function( data )
+        { alert(text(data));
+        $('#hilo').text(data);
+            alert(text(data));
+        }
+    })
+
+
+    });
+
+</script>
+

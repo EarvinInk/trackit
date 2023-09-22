@@ -4,7 +4,7 @@ from datetime import datetime as dt
 
 def counter(request):
     return Ticket.objects.aggregate(
-        total=Count('pk', filter=Q(assigned_to=request.user) & Q(date_raised__date = dt.now().date())),
+        # total=Count('pk', filter=Q(assigned_to=request.user) & Q(date_raised__date = dt.now().date())),
         closed=Count('pk', filter=Q(progress=1) & Q(date_raised__date = dt.now().date())),
         raised=Count('pk', filter=Q(progress=0) & Q(date_raised__date = dt.now().date())),
         in_progress=Count('pk', filter=Q(progress=2) & Q(date_raised__date = dt.now().date())),

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'Ticketing',
     'commenting',
     'searching',
+    'credentials',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

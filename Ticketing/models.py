@@ -1,22 +1,24 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+LOW = 1
+MED = 2
+HIGH = 3
+PRIORITIES = [(LOW, 'LOW'), (MED, 'MEDIUM'), (HIGH, 'HIGH')]  # LIMIT PRIORITY CHOICES,
 
-# Create your models here.
-# ticket model
+RAISED = 0
+IN_PROGRESS = 2
+CLOSED = 1
+PROGRESS = [(RAISED, 'RAISED'), (IN_PROGRESS, 'IN PROGRESS'), (CLOSED, 'CLOSED')]
+
+
 class Ticket(models.Model):
-    low = 1
-    med = 2
-    high = 3
-    PRIORITIES = [(low, 'Low'), (med, 'Medium'), (high, 'High')]  # limit priority choices,
     product = models.CharField(max_length=100)
     priority = models.IntegerField(choices=PRIORITIES)
-    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE,related_name='assigned_to')
-    closed_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='closed_by',null=True)
-    raised = 0
-    in_progress = 2
-    closed = 1
-    PROGRESS = [(raised, 'Raised'), (in_progress, 'In Progress'), (closed, 'Closed')]
+    raised_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='raised_by')
+    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_to', default="Unassigned")
+    closed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='closed_by', null=True)
+
     progress = models.IntegerField(choices=PROGRESS)
     description = models.TextField()
     date_raised = models.DateTimeField(auto_now_add=True)
@@ -29,3 +31,4 @@ class Ticket(models.Model):
         ordering = ('-date_raised',)
         verbose_name = 'Ticket'
         verbose_name_plural = 'Tickets'
+

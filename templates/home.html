@@ -9,27 +9,9 @@ title
 {% endblock %}
 
 {% block content %}
-<div class="container">
-
-     {% for ticket in tickets %}
-    <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{ ticket.title }}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{ ticket.get_priority_display }} {{ ticket.get_progress_display }}</h6>
-    <p class="card-text">{{ ticket.description }}</p>
-
-    <a href="{% url 'ticket:close' ticket.id %}" class="card-link"><button class="btn btn-primary">close</button></a>
-  </div>
-</div>
-<p></p>
-{% endfor %}
-<p>total {{total}}</p>
-<p>closed {{closed}}</p>
-<p>raised {{raised}}</p>
-<p>in_progress {{in_progress}}</p>
-<p>low {{low}}</p>
-<p>medium {{medium}}</p>
-<p>high {{high}}</p>
+<a href="{% url 'ticket:create' %}" class="card-link" xmlns="">
+    <button class="btn btn-primary">Create</button>
+</a>
 <form method="get" action="{% url 'search:search' %}">
     {% csrf_token %}
     <input type="search" name="qs">
@@ -37,5 +19,68 @@ title
     <input type="date" name="date">
     <input type="submit">
 </form>
+<div class="container">
+
+    {% for ticket in tickets %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <a href="{% url 'ticket:detail' ticket.id %}">
+                <h5 class="card-title" data-tid="{{ ticket.id }}">
+                    {{ ticket.title }}
+                </h5>
+            </a>
+            <h6 class="card-subtitle mb-2 text-muted" id="status{{ ticket.id }}">
+                {{ ticket.get_progress_display }}
+            </h6>
+            <h6 class="card-subtitle mb-2 text-muted" id="priority{{ ticket.id }}">
+                {{ ticket.get_priority_display}}
+            </h6>
+            <p class="card-text">{{ ticket.description }}</p>
+            <a href="{% url 'ticket:edit' ticket.id %}" class="card-link">
+                <button class="btn btn-primary">Edit</button></a>
+            <span class="card-link close-btn" id="close{{ticket.id}}" data-tid="{{ ticket.id }}">
+                <button class="btn btn-primary">close</button></span>
+            <span class="card-link raise-btn" id="raise{{ticket.id}}" data-tid="{{ ticket.id }}">
+                <button class="btn btn-primary">Raise</button></span>
+            <span class="card-link lower-btn" id="lower{{ticket.id}}" data-tid="{{ ticket.id }}">
+                <button class="btn btn-primary">Lower</button></span>
+        </div>
+    </div>
+
+    <p></p>
+    {% endfor %}
+    <div>
+        <span class="detail"></span>
+    </div>
+
+    <script src="{% static 'scripts/tickets.js' %}"></script>
+
+    <p>total {{total}}</p>
+    <p>closed {{closed}}</p>
+    <p>raised {{raised}}</p>
+    <p>in_progress {{in_progress}}</p>
+    <p>low {{low}}</p>
+    <p>medium {{medium}}</p>
+    <p>high {{high}}</p>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Issue</th>
+      <th scope="col">Raised by</th>
+      <th scope="col">Priority </th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for ticket in tickets %}
+    <tr>
+      <th scope="row">{{ ticket.id }}</th>
+      <td>{{ ticket.title }}</td>
+      <td>{{ ticket.raised_by }}</td>
+      <td>{{ ticket.get_priority_display}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock %}

@@ -13,7 +13,7 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
         c_password = request.POST['c_password']
-        role = request.POST['role']
+        # role = request.POST['role']
 
         if password == c_password:
             if User.objects.filter(username=username):
@@ -34,6 +34,7 @@ def register(request):
                 user.save()
                 print("user created")
                 return redirect('login')
+    return render(request,'register.html')
 
 
 def login(request):
@@ -46,7 +47,7 @@ def login(request):
             return redirect('/')
         else:
             messages.info(request, "Invalid credentials")
-            return redirect('login')
+            return redirect('credentials:login')
 
     return render(request, 'login.html')
 
